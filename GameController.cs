@@ -11,15 +11,12 @@ public class GameControl : MonoBehaviour
     public enum GameState { MainMenu, Playing, Paused, GameOver }
     public GameState currentState;
 
-    // UI panels
-    public GameObject mainMenuPanel;
-    public GameObject gameplayPanel;
-    public GameObject pausePanel;
-    public GameObject gameOverPanel;
+    // UI panels go here
+    
 
     private void Awake()
     {
-        // Ensure only one instance of GameControl exists
+        // Ensure only one instance of GameControl exists :)
         if (instance == null)
         {
             instance = this;
@@ -33,13 +30,13 @@ public class GameControl : MonoBehaviour
 
     private void Start()
     {
-        // Initialize the game state
-        ChangeState(GameState.MainMenu);
+        // Initialize the game
+        ChangeState(GameState.Playing);
     }
 
     private void Update()
     {
-        // Handle input based on the current game state
+        //input based on the current game state
         switch (currentState)
         {
             case GameState.Playing:
@@ -61,11 +58,6 @@ public class GameControl : MonoBehaviour
     {
         currentState = newState;
 
-        // Update UI panels based on the game state
-        mainMenuPanel.SetActive(currentState == GameState.MainMenu);
-        gameplayPanel.SetActive(currentState == GameState.Playing);
-        pausePanel.SetActive(currentState == GameState.Paused);
-        gameOverPanel.SetActive(currentState == GameState.GameOver);
 
         // Perform additional actions based on the state
         switch (currentState)
@@ -88,7 +80,7 @@ public class GameControl : MonoBehaviour
     public void StartGame()
     {
         ChangeState(GameState.Playing);
-        SceneManager.LoadScene("GameScene"); // Ensure you have a scene named "GameScene"
+        SceneManager.LoadScene("GameScene"); 
     }
 
     public void PauseGame()

@@ -14,7 +14,7 @@ public class selectoController : MonoBehaviour
         // Find all player GameObjects
         players = GameObject.FindGameObjectsWithTag("Player");
 
-        // Create a texture for the selection box
+        //  texture for the selection box
         selectionTexture = new Texture2D(1, 1);
         selectionTexture.SetPixel(0, 0, selectionColor);
         selectionTexture.Apply();
@@ -43,10 +43,14 @@ public class selectoController : MonoBehaviour
             float width = endPoint.x - startPoint.x;
             float height = endPoint.y - startPoint.y;
 
-            // Create a rectangle from the start point to the end point
-            selectionRect = new Rect(startPoint.x, Screen.height - startPoint.y, width, -height);
+            selectionRect = new Rect(
+                Mathf.Min(startPoint.x, endPoint.x),
+                Screen.height - Mathf.Max(startPoint.y, endPoint.y),
+                Mathf.Abs(-width),
+                Mathf.Abs(height)
+            );
 
-            // Draw the selection box
+            // draw the  box
             GUI.color = selectionColor;
             GUI.DrawTexture(selectionRect, selectionTexture);
         }
@@ -59,8 +63,14 @@ public class selectoController : MonoBehaviour
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(player.transform.position);
             if (selectionRect.Contains(screenPosition))
             {
-                // Implement your logic for selecting the player
-                Debug.Log("Player selected: " + player.name);
+                // Ensure the player has a component that can mark it as selected
+                PlayerController playerController = player.GetComponent<PlayerController>();
+                SpriteRenderer spriteRenderer = player.GetComponent<SpriteRenderer>();
+                if (playerController != null)
+                {
+                    playerController.isSelected = true;
+                    spriteRenderer.color = Color.red;
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 targetPosition;
     private bool isMoving;
-    private bool isSelected;
+    public bool isSelected;
     private SpriteRenderer spriteRenderer;
 
     public Color selectedColor = Color.red; // Color when selected
